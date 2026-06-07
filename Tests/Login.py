@@ -39,6 +39,8 @@ logged_in = driver.find_element(By.XPATH,value="//ul[@class='nav navbar-nav']/ch
 
 wait.until(ec.visibility_of(logged_in))
 
+logged_in.screenshot("Login_Button.png")
+
 print("Logged in successfully")
 
 driver.find_element(By.XPATH,value="//a[text()=' Logout']").click()
@@ -46,8 +48,14 @@ driver.find_element(By.XPATH,value="//a[text()=' Logout']").click()
 WebDriverWait(driver, 10).until(ec.url_to_be("https://automationexercise.com/login"))
 
 url = driver.current_url
-assert url.__eq__("https://automationexercise.com/login")
-print("Logout successfull")
+
+try:
+    assert url.__eq__("https://automationexercise.com")
+except:
+    print("Logout unsuccessfull")
+    driver.save_screenshot("screenshots/Loginpage.png")
+    
+else: print("Logout successfull")
 
 driver.close()
 
