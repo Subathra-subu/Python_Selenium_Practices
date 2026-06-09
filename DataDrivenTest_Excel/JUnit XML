@@ -1,0 +1,225 @@
+<?xml version="1.0" encoding="utf-8"?><testsuites name="pytest tests"><testsuite name="pytest" errors="0" failures="2" skipped="0" tests="2" time="29.713" timestamp="2026-06-09T20:34:22.261533+05:30" hostname="DESKTOP-CN5PLH3"><testcase classname="Tests.login_test.Testlogin" name="test_login[admi-admi]" time="26.154"><failure message="selenium.common.exceptions.TimeoutException: Message:">self = &lt;Tests.login_test.Testlogin object at 0x00000213F59007D0&gt;
+username = 'admi', password = 'admi'
+
+    def test_login(self,username,password):
+        self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
+        self.driver.get("https://www.demoblaze.com/")
+        self.logger.info("Application is launched")
+        self.driver.find_element(By.ID,"login2").click()
+        self.logger.info("Loginlink clicked")
+        wait = WebDriverWait(self.driver, 10)
+        username_box = wait.until(ec.visibility_of_element_located((By.ID, "loginusername")))
+        username_box.send_keys(username)
+        self.logger.info("Username entered")
+        self.driver.find_element(By.ID,"loginpassword").send_keys(password)
+        self.logger.info("Password entered")
+        self.driver.find_element(By.XPATH,"//button[text()='Log in']").click()
+        self.logger.info("Login button clicked")
+    
+        if username=="admin":
+            wait = WebDriverWait(self.driver,20)
+    
+            wait.until(ec.visibility_of_element_located((By.ID, "logout2")))
+            logout = self.driver.find_element(By.ID,"logout2")
+            assert logout.text == "Log out"
+            logout.click()
+            self.logger.info("Logout button clicked")
+            print("Login successfull...")
+        else:
+            wait = WebDriverWait(self.driver, 20)
+&gt;           alert = wait.until(ec.alert_is_present())
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+
+Tests\login_test.py:42: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;selenium.webdriver.support.wait.WebDriverWait (session="8d50726d33e4ee9fd358713fb6e8bf5f")&gt;
+method = &lt;function alert_is_present.&lt;locals&gt;._predicate at 0x00000213F535E2A0&gt;
+message = ''
+
+    def until(self, method: Callable[[D], Literal[False] | T], message: str = "") -&gt; T:
+        """Wait until the method returns a value that is not False.
+    
+        Calls the method provided with the driver as an argument until the
+        return value does not evaluate to ``False``.
+    
+        Args:
+            method: A callable object that takes a WebDriver instance as an
+                argument.
+            message: Optional message for TimeoutException.
+    
+        Returns:
+            The result of the last call to `method`.
+    
+        Raises:
+            TimeoutException: If 'method' does not return a truthy value within
+                the WebDriverWait object's timeout.
+    
+        Example:
+            &gt;&gt;&gt; from selenium.webdriver.common.by import By
+            &gt;&gt;&gt; from selenium.webdriver.support.ui import WebDriverWait
+            &gt;&gt;&gt; from selenium.webdriver.support import expected_conditions as EC
+            &gt;&gt;&gt;
+            &gt;&gt;&gt; # Wait until an element is visible on the page
+            &gt;&gt;&gt; wait = WebDriverWait(driver, 10)
+            &gt;&gt;&gt; element = wait.until(EC.visibility_of_element_located((By.ID, "exampleId")))
+            &gt;&gt;&gt; print(element.text)
+        """
+        screen = None
+        stacktrace = None
+    
+        end_time = time.monotonic() + self._timeout
+        while True:
+            try:
+                value = method(self._driver)
+                if value:
+                    return value
+            except self._ignored_exceptions as exc:
+                screen = getattr(exc, "screen", None)
+                stacktrace = getattr(exc, "stacktrace", None)
+            if time.monotonic() &gt; end_time:
+                break
+            time.sleep(self._poll)
+&gt;       raise TimeoutException(message, screen, stacktrace)
+E       selenium.common.exceptions.TimeoutException: Message:
+
+..\basicsSelenium\Lib\site-packages\selenium\webdriver\support\wait.py:121: TimeoutException</failure></testcase><testcase classname="Tests.login_test.Testlogin" name="test_login[admin-admin]" time="1.902"><failure message="selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_INTERNET_DISCONNECTED&#10;  (Session info: chrome=149.0.7827.54)&#10;Stacktrace:&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7797f3435+14875]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7797f3490+148d0]&#10;&#09;chromedriver!(No symbol) [0x7ff77934778d]&#10;&#09;chromedriver!(No symbol) [0x7ff77934432e]&#10;&#09;chromedriver!(No symbol) [0x7ff779334591]&#10;&#09;chromedriver!(No symbol) [0x7ff7793363ff]&#10;&#09;chromedriver!(No symbol) [0x7ff779334b33]&#10;&#09;chromedriver!(No symbol) [0x7ff7793342fb]&#10;&#09;chromedriver!(No symbol) [0x7ff779333fb1]&#10;&#09;chromedriver!(No symbol) [0x7ff779331c67]&#10;&#09;chromedriver!(No symbol) [0x7ff7793323e2]&#10;&#09;chromedriver!(No symbol) [0x7ff77934ba36]&#10;&#09;chromedriver!(No symbol) [0x7ff7793ef824]&#10;&#09;chromedriver!(No symbol) [0x7ff7793ca27a]&#10;&#09;chromedriver!(No symbol) [0x7ff7793ee9fc]&#10;&#09;chromedriver!(No symbol) [0x7ff779393eb0]&#10;&#09;chromedriver!(No symbol) [0x7ff779394e23]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff779dd6c91+5f80d1]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff779dd101b+5f245b]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff779df6305+617745]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7798103ee+3182e]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff779818b0c+39f4c]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7797fcb04+1df44]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7797fcc94+1e0d4]&#10;&#09;chromedriver!GetHandleVerifier [0x7ff7797e0997+1dd7]&#10;&#09;KERNEL32!BaseThreadInitThunk [0x7ffa85ace957+17]&#10;&#09;ntdll!RtlUserThreadStart [0x7ffa874a427c+2c]">self = &lt;Tests.login_test.Testlogin object at 0x00000213F5900A50&gt;
+username = 'admin', password = 'admin'
+
+    def test_login(self,username,password):
+        self.driver = webdriver.Chrome()
+        self.driver.maximize_window()
+&gt;       self.driver.get("https://www.demoblaze.com/")
+
+Tests\login_test.py:18: 
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+..\basicsSelenium\Lib\site-packages\selenium\webdriver\remote\webdriver.py:488: in get
+    self.execute(Command.GET, {"url": url})
+..\basicsSelenium\Lib\site-packages\selenium\webdriver\remote\webdriver.py:468: in execute
+    self.error_handler.check_response(response)
+_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ 
+
+self = &lt;selenium.webdriver.remote.errorhandler.ErrorHandler object at 0x00000213F58C8CD0&gt;
+response = {'status': 500, 'value': '{"value":{"error":"unknown error","message":"unknown error: net::ERR_INTERNET_DISCONNECTED\\...7+1dd7]\\n\\tKERNEL32!BaseThreadInitThunk [0x7ffa85ace957+17]\\n\\tntdll!RtlUserThreadStart [0x7ffa874a427c+2c]\\n"}}'}
+
+    def check_response(self, response: dict[str, Any]) -&gt; None:
+        """Check that a JSON response from the WebDriver does not have an error.
+    
+        Args:
+            response: The JSON response from the WebDriver server as a dictionary
+                object.
+    
+        Raises:
+            WebDriverException: If the response contains an error message.
+        """
+        status = response.get("status", None)
+        if not status or status == ErrorCode.SUCCESS:
+            return
+        value = None
+        message = response.get("message", "")
+        screen: str = response.get("screen", "")
+        stacktrace = None
+        if isinstance(status, int):
+            value_json = response.get("value", None)
+            if value_json and isinstance(value_json, str):
+                try:
+                    value = json.loads(value_json)
+                    if isinstance(value, dict):
+                        if len(value) == 1:
+                            value = value["value"]
+                        status = value.get("error", None)
+                        if not status:
+                            status = value.get("status", ErrorCode.UNKNOWN_ERROR)
+                            message = value.get("value") or value.get("message")
+                            if not isinstance(message, str):
+                                value = message
+                                message = message.get("message") if isinstance(message, dict) else None
+                        else:
+                            message = value.get("message", None)
+                except ValueError:
+                    pass
+    
+        exception_class: type[WebDriverException]
+        e = ErrorCode()
+        error_codes = [item for item in dir(e) if not item.startswith("__")]
+        for error_code in error_codes:
+            error_info = getattr(ErrorCode, error_code)
+            if isinstance(error_info, list) and status in error_info:
+                exception_class = getattr(ExceptionMapping, error_code, WebDriverException)
+                break
+        else:
+            exception_class = WebDriverException
+    
+        if not value:
+            value = response["value"]
+        if isinstance(value, str):
+            raise exception_class(value)
+        if message == "" and "message" in value:
+            message = value["message"]
+    
+        screen = None  # type: ignore[assignment]
+        if "screen" in value:
+            screen = value["screen"]
+    
+        stacktrace = None
+        st_value = value.get("stackTrace") or value.get("stacktrace")
+        if st_value:
+            if isinstance(st_value, str):
+                stacktrace = st_value.split("\n")
+            else:
+                stacktrace = []
+                try:
+                    for frame in st_value:
+                        line = frame.get("lineNumber", "")
+                        file = frame.get("fileName", "&lt;anonymous&gt;")
+                        if line:
+                            file = f"{file}:{line}"
+                        meth = frame.get("methodName", "&lt;anonymous&gt;")
+                        if "className" in frame:
+                            meth = f"{frame['className']}.{meth}"
+                        msg = "    at %s (%s)"
+                        msg = msg % (meth, file)
+                        stacktrace.append(msg)
+                except TypeError:
+                    pass
+        if exception_class == UnexpectedAlertPresentException:
+            alert_text = None
+            if "data" in value:
+                alert_text = value["data"].get("text")
+            elif "alert" in value:
+                alert_text = value["alert"].get("text")
+            raise exception_class(message, screen, stacktrace, alert_text)
+&gt;       raise exception_class(message, screen, stacktrace)
+E       selenium.common.exceptions.WebDriverException: Message: unknown error: net::ERR_INTERNET_DISCONNECTED
+E         (Session info: chrome=149.0.7827.54)
+E       Stacktrace:
+E       	chromedriver!GetHandleVerifier [0x7ff7797f3435+14875]
+E       	chromedriver!GetHandleVerifier [0x7ff7797f3490+148d0]
+E       	chromedriver!(No symbol) [0x7ff77934778d]
+E       	chromedriver!(No symbol) [0x7ff77934432e]
+E       	chromedriver!(No symbol) [0x7ff779334591]
+E       	chromedriver!(No symbol) [0x7ff7793363ff]
+E       	chromedriver!(No symbol) [0x7ff779334b33]
+E       	chromedriver!(No symbol) [0x7ff7793342fb]
+E       	chromedriver!(No symbol) [0x7ff779333fb1]
+E       	chromedriver!(No symbol) [0x7ff779331c67]
+E       	chromedriver!(No symbol) [0x7ff7793323e2]
+E       	chromedriver!(No symbol) [0x7ff77934ba36]
+E       	chromedriver!(No symbol) [0x7ff7793ef824]
+E       	chromedriver!(No symbol) [0x7ff7793ca27a]
+E       	chromedriver!(No symbol) [0x7ff7793ee9fc]
+E       	chromedriver!(No symbol) [0x7ff779393eb0]
+E       	chromedriver!(No symbol) [0x7ff779394e23]
+E       	chromedriver!GetHandleVerifier [0x7ff779dd6c91+5f80d1]
+E       	chromedriver!GetHandleVerifier [0x7ff779dd101b+5f245b]
+E       	chromedriver!GetHandleVerifier [0x7ff779df6305+617745]
+E       	chromedriver!GetHandleVerifier [0x7ff7798103ee+3182e]
+E       	chromedriver!GetHandleVerifier [0x7ff779818b0c+39f4c]
+E       	chromedriver!GetHandleVerifier [0x7ff7797fcb04+1df44]
+E       	chromedriver!GetHandleVerifier [0x7ff7797fcc94+1e0d4]
+E       	chromedriver!GetHandleVerifier [0x7ff7797e0997+1dd7]
+E       	KERNEL32!BaseThreadInitThunk [0x7ffa85ace957+17]
+E       	ntdll!RtlUserThreadStart [0x7ffa874a427c+2c]
+
+..\basicsSelenium\Lib\site-packages\selenium\webdriver\remote\errorhandler.py:232: WebDriverException</failure></testcase></testsuite></testsuites>
