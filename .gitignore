@@ -16,3 +16,6 @@ __pycache__/
 Reports/
 AllureReportlocal/
 screenshots/
+HtmlReport.html/
+testlogreport.log/
+
