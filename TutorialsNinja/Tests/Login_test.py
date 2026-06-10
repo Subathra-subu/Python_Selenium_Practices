@@ -10,6 +10,7 @@ import Utilities.logCreater
 @pytest.mark.usefixtures("setup_and_teardown")
 class Testlogin:
     logger = Utilities.logCreater.log_creator()
+    @pytest.mark.dependency(name="login",scope="session")
     def test_validLogin(self):
         email = read_config.get_data("Login credentials","email")
         password = read_config.get_data("Login credentials","password")
@@ -19,7 +20,7 @@ class Testlogin:
         self.driver.find_element(By.XPATH,"//a[text()='Login']").click()
         self.logger.info("Login link clicked")
         self.driver.find_element(By.XPATH,"(//div[@class='form-group'])[1]/child::input").send_keys(email)
-        self.logger.info("Eamil entered")
+        self.logger.info("Email entered")
         self.driver.find_element(By.XPATH,"(//div[@class='form-group'])[2]/child::input").send_keys(password)
         self.logger.info("Password entered")
         self.driver.find_element(By.XPATH,"//input[@type='submit']").click()
